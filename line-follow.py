@@ -7,15 +7,15 @@ motorDriveLeft = LargeMotor("outA")
 motorDriveRight = LargeMotor("outD")
 
 sensorLight = LightSensor()
-sensorColor = ColorSensor()
+#sensorColor = ColorSensor()
 
 lcd = Screen()
 
 # Initialization
 sensorLight.mode = "REFLECT"
-sensorColor.mode = "COL-REFLECT"
+#sensorColor.mode = "COL-REFLECT"
 whiteIntensity = 600
-targetIntensity = 350
+targetIntensity = 370
 blackIntensity = 280
 
 # Start Line Following
@@ -27,12 +27,12 @@ KP = 2.5 # P constant for PID
 while True:
     #lcd.clear()
     speedModif = int(KP * (sensorLight.value() - targetIntensity))
-    if speedModif < 0:
-        speedModif *= 6
+    if speedModif > 0:
+        speedModif *= 4
     else:
         speedModif *= 1
-    motorDriveLeft.run_forever(speed_sp=max(100, min(900, leftSpeed - speedModif)))
-    motorDriveRight.run_forever(speed_sp=max(100, min(900, rightSpeed + speedModif)))
+    motorDriveLeft.run_forever(speed_sp=max(-100, min(900, leftSpeed + speedModif)))
+    motorDriveRight.run_forever(speed_sp=max(-100, min(900, rightSpeed - speedModif)))
     #lcd.draw.text((48,13), str(sensorLight.value())
     #lcd.update()
     sleep(0.1)
