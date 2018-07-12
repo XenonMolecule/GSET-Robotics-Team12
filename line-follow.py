@@ -33,7 +33,7 @@ recentVictim = False # Whether or not the robot detected a victim recently
 avoided_object = False
 
 def object_avoidance():
-    targetDistance = 45
+    targetDistance = 35
     speed = 300
     time_in_range = 0
     turn_90 = 236
@@ -68,7 +68,7 @@ def object_avoidance():
     # Turn in a semicircle around the obstacle
     motorDriveLeft.run_forever(speed_sp=682)
     motorDriveRight.run_forever(speed_sp=300)
-    sleep(1)
+    sleep(2)
 
     while sensorLight.value() > 375:
         motorDriveLeft.run_forever(speed_sp=682)
@@ -115,7 +115,7 @@ while True:
             Sound.beep()
             lastVictimTime = time() # Reset the victim timer
 
-    if(sensorUltraSonic.value() < 50 and not avoided_object):
+    if(sensorUltraSonic.value() < 40 and not avoided_object):
         object_avoidance()
         avoided_object = True
 
