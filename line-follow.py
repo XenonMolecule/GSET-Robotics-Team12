@@ -87,8 +87,7 @@ def object_avoidance():
     motorDriveLeft.wait_while('running')
     motorDriveRight.wait_while('running')
 
-# TODO: CHANGE FROM TRUE TO CONDITION
-while True:
+while sensorColor.value() != 5:
     # Use P-Loop to scale the speed modifier based on offset from optimal intensity
     speedModif = int(KP * (sensorLight.value() - targetIntensity))
     if speedModif < 0:
@@ -121,3 +120,5 @@ while True:
 
     # Let Eggbert sleep just a tad
     sleep(0.1)
+
+# Eggbert is home!
