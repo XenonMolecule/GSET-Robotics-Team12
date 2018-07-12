@@ -22,7 +22,9 @@ targetIntensity = 375
 leftSpeed = 100 # Speed of Left Motor
 rightSpeed = 100 # Speed of Right Motor
 speedModif = 0 # Speed Modifier for Motors
-KP = 1.0 # P constant for PID
+KP = 2.5 # P constant for PID
+K_Whippage_B = 0.65 # Constant for Whippage on Line
+K_Whippage_W = 1.75 # Constant for Whippage off Line
 lastVictimTime = 0.0 # The time at which the last victim was rolled over
 recentVictim = False # Whether or not the robot detected a victim recently
 
@@ -31,9 +33,11 @@ while True:
     # Use P-Loop to scale the speed modifier based on offset from optimal intensity
     speedModif = int(KP * (sensorLight.value() - targetIntensity))
     if speedModif < 0:
-        speedModif *= 6 # Increase whippage when on black lines
+        speedModif *= K_Whippage_B # Increase whippage when on black lines
+        speedModif = int(speedModif)
     else:
-        speedModif *= 1 # Modify whippage on white space
+        speedModif *= K_Whippage_W # Modify whippage on white space
+        speedModif = int(speedModif)
 
     # Run the motors with the modifications and within the desired speed range
     motorDriveLeft.run_forever(speed_sp=max(-100, min(900, leftSpeed + speedModif)))
