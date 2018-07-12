@@ -30,6 +30,7 @@ K_Whippage_B = 0.65 # Constant for Whippage on Line
 K_Whippage_W = 1.75 # Constant for Whippage off Line
 lastVictimTime = 0.0 # The time at which the last victim was rolled over
 recentVictim = False # Whether or not the robot detected a victim recently
+avoided_object = False
 
 def object_avoidance():
     targetDistance = 45
@@ -83,6 +84,9 @@ def object_avoidance():
     motorDriveLeft.run_to_rel_pos(position_sp = -1 * turn_90, speed_sp = 200, stop_action= "hold")
     motorDriveRight.run_to_rel_pos(position_sp = turn_90, speed_sp = 200, stop_action = "hold")
 
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
 # TODO: CHANGE FROM TRUE TO CONDITION
 while True:
     # Use P-Loop to scale the speed modifier based on offset from optimal intensity
@@ -111,8 +115,9 @@ while True:
             Sound.beep()
             lastVictimTime = time() # Reset the victim timer
 
-    if(sensorUltraSonic.value() < 50):
+    if(sensorUltraSonic.value() < 50 and not avoided_object):
         object_avoidance()
+        avoided_object = True
 
     # Let Eggbert sleep just a tad
     sleep(0.1)
