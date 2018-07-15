@@ -37,82 +37,132 @@ def drive_to_dist(target_dist_mm):
     motorDriveRight.stop(stop_action = "hold")
 
 
-drive_to_dist(40)
+def look_for_ball():
+    drive_to_dist(40)
 
-motorDriveLeft.run_timed(time_sp=500, speed_sp = 100)
-motorDriveRight.run_timed(time_sp=500, speed_sp = 100)
+    motorDriveLeft.run_timed(time_sp=500, speed_sp = 100)
+    motorDriveRight.run_timed(time_sp=500, speed_sp = 100)
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 100)
+    motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 100)
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    drive_to_dist(40)
+
+    motorDriveLeft.run_timed(time_sp=500, speed_sp = 100)
+    motorDriveRight.run_timed(time_sp=500, speed_sp = 100)
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 100)
+    motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 100)
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 225, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -225, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    # LOOK FOR IR BALL
+    if(sensorIR.value()!=0):
+        return
+    sleep(1)
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 225, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -225, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    drive_to_dist(40)
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    # LOOK FOR IR BALL
+    if(sensorIR.value()!=0):
+        return
+    sleep(1)
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    drive_to_dist(300)
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 300, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 300, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 115, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = -115, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    motorDriveLeft.run_to_rel_pos(position_sp = 300, speed_sp = 150, stop_action = "hold")
+    motorDriveRight.run_to_rel_pos(position_sp = 300, speed_sp = 150, stop_action = "hold")
+
+    motorDriveLeft.wait_while('running')
+    motorDriveRight.wait_while('running')
+
+    # LOOK FOR IR BALL
+    if(sensorIR.value()!=0):
+        return
+    sleep(1)
+
+look_for_ball()
+
+motorDriveLeft.run_to_rel_pos(position_sp = 400, speed_sp = 150, stop_action = "hold")
+motorDriveRight.run_to_rel_pos(position_sp = 400, speed_sp = 150, stop_action = "hold")
 
 motorDriveLeft.wait_while('running')
 motorDriveRight.wait_while('running')
 
-motorDriveLeft.run_to_rel_pos(position_sp = -110, speed_sp = 100)
-motorDriveRight.run_to_rel_pos(position_sp = -110, speed_sp = 100)
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-motorDriveLeft.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-drive_to_dist(40)
-
-motorDriveLeft.run_timed(time_sp=500, speed_sp = 100)
-motorDriveRight.run_timed(time_sp=500, speed_sp = 100)
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 100)
-motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 100)
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-motorDriveLeft.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-# LOOK FOR IR BALL
-sleep(1)
-
-motorDriveLeft.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-motorDriveLeft.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-drive_to_dist(40)
-
-motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-# LOOK FOR IR BALL
-sleep(1)
-
-motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
-
-motorDriveLeft.wait_while('running')
-motorDriveRight.wait_while('running')
-
-drive_to_dist(300)
+Sound.beep()
