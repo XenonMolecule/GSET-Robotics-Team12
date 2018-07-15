@@ -10,6 +10,7 @@ motorDriveRight = LargeMotor("outD")
 sensorLight = LightSensor()
 sensorColor = ColorSensor()
 sensorUltraSonic = UltrasonicSensor()
+sensorIR = Sensor(address='in2:i2c8',driver_name='ht-nxt-ir-seek-v2')
 
 lcd = Screen()
 
@@ -25,7 +26,7 @@ targetIntensity = 375
 leftSpeed = 100 # Speed of Left Motor
 rightSpeed = 100 # Speed of Right Motor
 speedModif = 0 # Speed Modifier for Motors
-KP = 1.5 # P constant for PID
+KP = 2.5 # P constant for PID
 K_Whippage_B = 0.65 # Constant for Whippage on Line
 K_Whippage_W = 1.9 # Constant for Whippage off Line
 lastVictimTime = 0.0 # The time at which the last victim was rolled over
