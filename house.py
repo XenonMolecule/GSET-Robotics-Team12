@@ -45,8 +45,8 @@ motorDriveRight.run_timed(time_sp=500, speed_sp = 100)
 motorDriveLeft.wait_while('running')
 motorDriveRight.wait_while('running')
 
-motorDriveLeft.run_to_rel_pos(position_sp = -120, speed_sp = 100)
-motorDriveRight.run_to_rel_pos(position_sp = -120, speed_sp = 100)
+motorDriveLeft.run_to_rel_pos(position_sp = -110, speed_sp = 100)
+motorDriveRight.run_to_rel_pos(position_sp = -110, speed_sp = 100)
 
 motorDriveLeft.wait_while('running')
 motorDriveRight.wait_while('running')
@@ -80,6 +80,12 @@ motorDriveRight.wait_while('running')
 # LOOK FOR IR BALL
 sleep(1)
 
+motorDriveLeft.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
+motorDriveRight.run_to_rel_pos(position_sp = 50, speed_sp = 150, stop_action = "hold")
+
+motorDriveLeft.wait_while('running')
+motorDriveRight.wait_while('running')
+
 motorDriveLeft.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
 motorDriveRight.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
 
@@ -88,10 +94,25 @@ motorDriveRight.wait_while('running')
 
 drive_to_dist(40)
 
-motorDriveLeft.run_to_rel_pos(position_sp = -230, speed_sp = 150, stop_action = "hold")
-motorDriveRight.run_to_rel_pos(position_sp = 230, speed_sp = 150, stop_action = "hold")
+motorDriveLeft.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+motorDriveRight.run_to_rel_pos(position_sp = -100, speed_sp = 150, stop_action = "hold")
+
+motorDriveLeft.wait_while('running')
+motorDriveRight.wait_while('running')
+
+motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
+motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
 
 motorDriveLeft.wait_while('running')
 motorDriveRight.wait_while('running')
 
 # LOOK FOR IR BALL
+sleep(1)
+
+motorDriveLeft.run_to_rel_pos(position_sp = -236, speed_sp = 150, stop_action = "hold")
+motorDriveRight.run_to_rel_pos(position_sp = 236, speed_sp = 150, stop_action = "hold")
+
+motorDriveLeft.wait_while('running')
+motorDriveRight.wait_while('running')
+
+drive_to_dist(300)
