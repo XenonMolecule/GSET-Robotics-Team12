@@ -25,9 +25,9 @@ targetIntensity = 375
 leftSpeed = 100 # Speed of Left Motor
 rightSpeed = 100 # Speed of Right Motor
 speedModif = 0 # Speed Modifier for Motors
-KP = 2.5 # P constant for PID
+KP = 1.5 # P constant for PID
 K_Whippage_B = 0.65 # Constant for Whippage on Line
-K_Whippage_W = 1.75 # Constant for Whippage off Line
+K_Whippage_W = 1.9 # Constant for Whippage off Line
 lastVictimTime = 0.0 # The time at which the last victim was rolled over
 recentVictim = False # Whether or not the robot detected a victim recently
 avoided_object = False
@@ -87,6 +87,84 @@ def object_avoidance():
     motorDriveLeft.wait_while('running')
     motorDriveRight.wait_while('running')
 
+def probe_direction():
+    turn_dir = 0
+    dist = sensorUltraSonic.value()
+    # Turn Left
+    motorDriveLeft.run_to_rel_pos(position_sp=-35, speed_sp = 50, stop_action="hold")
+    motorDriveRight.run_to_rel_pos(position_sp=35, speed_sp = 50, stop_action="hold")
+    motorDriveLeft.wait_while("running")
+    motorDriveRight.wait_while("running")
+    sleep(0.2)
+    new_dist = sensorUltraSonic.value()
+    sleep(0.2)
+    motorDriveLeft.run_to_rel_pos(position_sp=35, speed_sp = 50, stop_action="hold")
+    motorDriveRight.run_to_rel_pos(position_sp=-35, speed_sp = 50, stop_action="hold")
+    motorDriveLeft.wait_while("running")
+    motorDriveRight.wait_while("running")
+    if(new_dist < dist):
+        turn_dir -= 1 # Target is left
+    else:
+        turn_dir += 1 # Target is right
+    dist = sensorUltraSonic.value()
+    # Turn Right
+    motorDriveLeft.run_to_rel_pos(position_sp=35, speed_sp = 50, stop_action="hold")
+    motorDriveRight.run_to_rel_pos(position_sp=-35, speed_sp = 50, stop_action="hold")
+    motorDriveLeft.wait_while("running")
+    motorDriveRight.wait_while("running")
+    sleep(0.2)
+    new_dist = sensorUltraSonic.value()
+    sleep(0.2)
+    motorDriveLeft.run_to_rel_pos(position_sp=-35, speed_sp = 50, stop_action="hold")
+    motorDriveRight.run_to_rel_pos(position_sp=35, speed_sp = 50, stop_action="hold")
+    motorDriveLeft.wait_while("running")
+    motorDriveRight.wait_while("running")
+    if(new_dist < dist):
+        turn_dir += 1 # Target is right
+    else:
+        turn_dir -= 1 # Target is left
+    return turn_dir
+
+# Max_turn in ticks
+def turn_to_wall(max_turn):
+    last_dist = 1000
+    direction = probe_direction()
+    times_increasing = 0 # times increasing in a row
+    if(direction < 0):
+        motorDriveLeft.run_forever(speed_sp = -75)
+        motorDriveRight.run_forever(speed_sp = 75)
+        sleep(0.5)
+        # Check for wall while turning left
+        while True:
+            print(sensorUltraSonic.value())
+            if (sensorUltraSonic.value() >= last_dist):
+                times_increasing += 1
+            else:
+                times_increasing = 0
+            if (times_increasing > 0):
+                break
+            last_dist = sensorUltraSonic.value()
+            sleep(0.1)
+        motorDriveLeft.stop(stop_action="hold")
+        motorDriveRight.stop(stop_action="hold")
+    elif(direction > 0):
+        motorDriveLeft.run_forever(speed_sp = 75)
+        motorDriveRight.run_forever(speed_sp = -75)
+        sleep(0.5)
+        # Check for wall while turning right
+        while True:
+            print(sensorUltraSonic.value())
+            if (sensorUltraSonic.value() >= last_dist):
+                times_increasing += 1
+            else:
+                times_increasing = 0
+            if (times_increasing > 0):
+                break
+            last_dist = sensorUltraSonic.value()
+            sleep(0.1)
+        motorDriveLeft.stop(stop_action="hold")
+        motorDriveRight.stop(stop_action="hold")
+
 while sensorColor.value() != 5:
     # Use P-Loop to scale the speed modifier based on offset from optimal intensity
     speedModif = int(KP * (sensorLight.value() - targetIntensity))
@@ -98,11 +176,11 @@ while sensorColor.value() != 5:
         speedModif = int(speedModif)
 
     # Run the motors with the modifications and within the desired speed range
-    motorDriveLeft.run_forever(speed_sp=max(-100, min(900, leftSpeed + speedModif)))
-    motorDriveRight.run_forever(speed_sp=max(-100, min(900, rightSpeed - speedModif)))
+    motorDriveLeft.run_forever(speed_sp=max(-150, min(900, leftSpeed + speedModif)))
+    motorDriveRight.run_forever(speed_sp=max(-150, min(900, rightSpeed - speedModif)))
 
     # If we have detected some victims lately
-    if time() - lastVictimTime < 2:
+    if time() - lastVictimTime < 3:
         recentVictim = True
     else:
         recentVictim = False
@@ -120,5 +198,13 @@ while sensorColor.value() != 5:
 
     # Let Eggbert sleep just a tad
     sleep(0.1)
+    print(sensorColor.value())
 
 # Eggbert is home!
+motorDriveLeft.stop(stop_action = "brake")
+motorDriveRight.stop(stop_action = "brake")
+sensorUltraSonic.mode = "US-DIST-CM"
+
+sleep(1)
+
+turn_to_wall(200)
