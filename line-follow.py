@@ -349,6 +349,8 @@ motorDriveLeft.stop(stop_action = "brake")
 motorDriveRight.stop(stop_action = "brake")
 sensorUltraSonic.mode = "US-DIST-CM"
 
+Sound.beep()
+'''
 sleep(1)
 
 turn_to_wall(200)
@@ -362,3 +364,4 @@ motorDriveLeft.wait_while('running')
 motorDriveRight.wait_while('running')
 
 Sound.beep()
+'''
